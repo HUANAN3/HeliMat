@@ -3,7 +3,7 @@
 **HeliMat** is a matrix library for C++ numerical computations, primarily used for daily engineering calculations. The library currently covers basic matrix operations and is under further development for numerical calculations of scientific problems in the helicopter domain.
 
 **HeliMat**是一个用于C++数值计算的矩阵库，主要用于日常工程计算。该库目前含盖矩阵基本操作，并正在进一步开发中，用于直升机领域科学问题数值计算。
-![Alt Text](HeliMatLogo.png)
+![Example Image](HeliMatLogo.png)
 
 ## Installation
 
