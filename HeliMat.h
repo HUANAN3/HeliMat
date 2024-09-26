@@ -118,6 +118,9 @@ private:
     size_t indOfCol;
 };
 
+template <typename Ty>
+auto eyes(size_t MatrixSize) -> Matrix<Ty>;
+
 template <typename Ty> 
 Matrix<Ty>::Matrix(size_t row, size_t col, std::initializer_list<Ty> inilist) 
  : rowSize(row), colSize(col), mat(inilist)
@@ -193,7 +196,7 @@ auto Matrix<Ty>::det() -> Ty
                 rowPivot = rowInd;
             }
         }
-        if (U(rowPivot, colInd) < 1.0e-6)
+        if (abs(U(rowPivot, colInd)) < 1.0e-9)
             throw std::logic_error("矩阵奇异，不可奇异值分解！");
         U.swapRows(rowPivot, colInd);
         for (size_t rowInd = colInd + 1; rowInd <= rowSize; ++rowInd) {
@@ -277,7 +280,7 @@ auto Matrix<Ty>::inv() -> Matrix<Ty>
                 rowPivot = rowInd;
             }
         }
-        if (U(rowPivot, colInd) < 1.0e-6)
+        if (abs(U(rowPivot, colInd)) < 1.0e-9)
             throw std::logic_error("矩阵奇异，不可奇异值分解！");
         U.swapRows(rowPivot, colInd);
         P.swapRows(rowPivot, colInd);
@@ -467,7 +470,7 @@ auto Matrix<Ty>::operator/(Matrix<Ty> other) -> Matrix<Ty>
                 rowPivot = rowInd;
             }
         }
-        if (A(rowPivot, indOfCol) < 1.0e-6)
+        if (abs(A(rowPivot, indOfCol)) < 1.0e-6)
             throw std::logic_error("矩阵奇异，不可奇异值分解！");
         A.swapRows(rowPivot, indOfCol);
         B.swapRows(rowPivot, indOfCol);
@@ -581,4 +584,14 @@ auto operator<<(std::ostream& os, const RowProxy<Ty>& matrixRow) -> std::ostream
     }
     os << std::endl;
     return os;
+}
+
+template <typename Ty> 
+auto eyes(size_t MatrixSize) -> Matrix<Ty>
+{
+    Matrix<Ty> resultMatrix(MatrixSize, MatrixSize);
+    for (size_t ind = 1; ind <= MatrixSize; ++ind) {
+        resultMatrix(ind, ind) = 1;
+    }
+    return resultMatrix;
 }
