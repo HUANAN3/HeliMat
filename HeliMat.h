@@ -79,6 +79,8 @@ public:
     auto operator-(const Matrix<Ty>& other) -> Matrix<Ty>;
     auto operator*(const Matrix<Ty>& other) const -> Matrix<Ty>;
     auto operator*(Ty other) const -> Matrix<Ty>;
+    auto operator+(Ty other) const -> Matrix<Ty>;
+    auto operator-(Ty other) const -> Matrix<Ty>;
     auto operator/(Matrix<Ty> a) -> Matrix<Ty>;
     template <typename T>
     friend auto operator<<(std::ostream& os, const Matrix<T>& matrix) -> std::ostream&;
@@ -452,6 +454,44 @@ auto operator*(Ty scalar, const Matrix<Ty>& matrix) -> Matrix<Ty> {
 
 auto operator*(int scalar, const Matrix<double>& matrix) -> Matrix<double> {
     return matrix * scalar; 
+}
+
+template <typename Ty>
+auto Matrix<Ty>::operator+(Ty other) const -> Matrix<Ty>
+{
+    Matrix<Ty> resultMatrix(rowSize, colSize);
+    for (size_t ind = 0; ind < numOfElements(); ++ind) {
+        resultMatrix.mat[ind] = mat[ind] + other;
+    }
+    return resultMatrix;
+}
+
+template <typename Ty>
+auto operator+(Ty scalar, const Matrix<Ty>& matrix) -> Matrix<Ty> {
+    return matrix + scalar; 
+}
+
+auto operator+(int scalar, const Matrix<double>& matrix) -> Matrix<double> {
+    return matrix + scalar; 
+}
+
+template <typename Ty>
+auto Matrix<Ty>::operator-(Ty other) const -> Matrix<Ty>
+{
+    Matrix<Ty> resultMatrix(rowSize, colSize);
+    for (size_t ind = 0; ind < numOfElements(); ++ind) {
+        resultMatrix.mat[ind] = mat[ind] - other;
+    }
+    return resultMatrix;
+}
+
+template <typename Ty>
+auto operator-(Ty scalar, const Matrix<Ty>& matrix) -> Matrix<Ty> {
+    return -matrix + scalar; 
+}
+
+auto operator-(int scalar, const Matrix<double>& matrix) -> Matrix<double> {
+    return matrix - scalar; 
 }
 
 template <typename Ty>
