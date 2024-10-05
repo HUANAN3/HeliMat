@@ -428,8 +428,8 @@ auto Matrix<Ty>::operator*(const Matrix<Ty>& other) const -> Matrix<Ty>
         throw std::invalid_argument("矩阵相乘维数不匹配!");
     Matrix<Ty> C(rowSize, other.colSize);
     for (size_t i = 1; i <= rowSize; ++i) {
-        for (size_t j = 1; j <= other.colSize; ++j) {
-            for (size_t k = 1; k <= colSize; ++k) {
+        for (size_t k = 1; k <= other.colSize; ++k) {
+            for (size_t j = 1; j <= colSize; ++j) {
                 C(i, j) = C(i, j) + (*this)(i, k) * other(k, j);  //索引从1开始！
             }
         }
